@@ -1,0 +1,6 @@
+# System files Windows and macOS create in folders
+Thumbs.db
+desktop.ini
+.DS_Store
+# Local settings from Vercel's command line tool
+.vercel
