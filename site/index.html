@@ -202,7 +202,7 @@ html.seen .intro { display: none; }
 .close-btn { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 4px 0 14px; background: none; border: 0; font: 400 12px/1 var(--f-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--on-forest); cursor: pointer; }
 .close-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.5; }
 .overlay nav { display: grid; margin-top: auto; }
-.overlay nav a { display: flex; align-items: baseline; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line-forest); font: 400 clamp(32px, 8vw, 56px)/1.1 var(--f-display); text-decoration: none; opacity: 0; transform: translateY(26px); transition: opacity .5s, transform .6s var(--ease), color .2s; }
+.overlay nav a { display: flex; align-items: baseline; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line-forest); font: 400 clamp(28px, 5.4vw, 40px)/1.15 var(--f-display); text-decoration: none; opacity: 0; transform: translateY(26px); transition: opacity .5s, transform .6s var(--ease), color .2s; }
 .overlay nav a small { font: 400 10.5px/1 var(--f-mono); letter-spacing: .14em; color: var(--tan); }
 .overlay nav a:hover { color: var(--tan); }
 .overlay.open nav a { opacity: 1; transform: none; transition-delay: calc(.25s + var(--i) * .06s); }
@@ -322,7 +322,7 @@ html.seen .intro { display: none; }
 .ichip:hover { border-color: var(--ink); color: var(--ink); }
 .ichip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--white); }
 .ideas-stage { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: clamp(28px, 4vw, 64px); align-items: center; }
-.idea-img { position: relative; margin: 0; aspect-ratio: 4 / 3; max-width: 100%; border-radius: var(--r); overflow: hidden; background: var(--beige); }
+.idea-img { position: relative; margin: 0; aspect-ratio: 4 / 3; touch-action: pan-y; max-width: 100%; border-radius: var(--r); overflow: hidden; background: var(--beige); }
 .idea-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .6s ease; }
 .idea-img img.out { opacity: 0; }
 .idea-img figcaption { position: absolute; left: 14px; bottom: 14px; padding: 7px 12px; border-radius: 999px; background: rgba(255, 253, 249, .92); font: 400 10.5px/1.2 var(--f-mono); letter-spacing: .06em; }
@@ -332,6 +332,11 @@ html.seen .intro { display: none; }
 .idea-info .btn { margin-top: 26px; }
 .ideas-note { margin-top: 22px; font: 400 11px/1.5 var(--f-mono); color: var(--muted); }
 @media (max-width: 900px) { .ideas-stage { grid-template-columns: minmax(0, 1fr); } }
+/* Every reference for the chosen look, shown as a row of thumbnails under the photo */
+.idea-media { display: grid; gap: 10px; min-width: 0; }
+.idea-thumbs button { flex: 1 1 0; min-width: 72px; max-width: 150px; }
+.idea-pin { justify-self: start; margin-top: 4px; }
+.idea-img figcaption b { font-weight: 700; }
 @media (max-width: 600px) {
   .ideas-row { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
   .ideas-row::-webkit-scrollbar { display: none; }
@@ -530,6 +535,29 @@ html.seen .intro { display: none; }
 .rev .eyebrow::after { content: ""; width: 26px; height: 1px; background: currentColor; }
 .stars { display: flex; justify-content: center; gap: 5px; margin-top: 34px; color: var(--terracotta); }
 .stars svg { width: 18px; height: 18px; fill: currentColor; }
+.stars svg.off { opacity: .25; }
+/* Write a review: a quiet button that opens a small card in the same section */
+.rev-add { display: grid; justify-items: center; gap: 18px; margin-top: 34px; }
+.rev-form { display: grid; gap: 20px; width: 100%; max-width: 580px; padding: clamp(20px, 3vw, 30px); border-radius: var(--r); background: var(--white); box-shadow: 0 18px 40px rgba(47, 34, 25, .08); text-align: left; }
+.rev-form label, .rev-rate legend { display: grid; gap: 8px; padding: 0; font: 400 11px/1.4 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.rev-form .opt { text-transform: none; letter-spacing: .02em; }
+.rev-rate { margin: 0; padding: 0; border: 0; }
+.rev-form input:not([type="radio"]), .rev-form textarea { width: 100%; padding: 10px 0 12px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; color: var(--ink); font: 400 16px/1.4 var(--f-body); letter-spacing: 0; text-transform: none; }
+.rev-form textarea { min-height: 96px; resize: vertical; }
+.rev-form input:focus, .rev-form textarea:focus { outline: none; border-bottom-color: var(--terracotta); box-shadow: 0 1px 0 var(--terracotta); }
+.rev-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.rate-stars { display: flex; gap: 6px; }
+.rate-stars label { position: relative; display: inline-flex; cursor: pointer; color: var(--terracotta); opacity: .25; transition: opacity .2s, transform .2s; }
+.rate-stars label.on { opacity: 1; }
+@media (hover: hover) { .rate-stars label:hover { transform: scale(1.1); } }
+.rate-stars input { position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; }
+.rate-stars svg { width: 32px; height: 32px; fill: currentColor; }
+.rate-stars input:focus-visible + svg { outline: 2px solid var(--terracotta); outline-offset: 3px; border-radius: 4px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.rev-form .err { margin: 0; color: #A33A2A; }
+.rev-thanks { max-width: 46ch; color: var(--sage-ink); }
+.rev-thanks a { color: var(--terracotta-deep); text-underline-offset: 4px; }
+@media (max-width: 560px) { .rev-fields { grid-template-columns: minmax(0, 1fr); } }
 .rev-stage { position: relative; touch-action: pan-y; }
 .rev-quote { margin: 24px auto 0; max-width: 30ch; font: 400 clamp(26px, 3.4vw, 46px)/1.25 var(--f-display); text-wrap: balance; letter-spacing: -.01em; }
 .rev-quote.anim { animation: quoteIn .8s var(--ease); }
@@ -1032,7 +1060,7 @@ img.sw-imgzone { outline: 2px dashed var(--terracotta); outline-offset: 3px; }
         </div>
       </div>
       <div class="ideas-stage rv">
-        <figure class="idea-img" id="ideaImg"><img alt=""><img class="out" alt=""><figcaption id="ideaCredit"></figcaption></figure>
+        <div class="idea-media"><figure class="idea-img" id="ideaImg"><img alt=""><img class="out" alt=""><button type="button" class="pd-arrow l" id="ideaPrev" aria-label="Previous reference"><svg><use href="#i-back"/></svg></button><button type="button" class="pd-arrow r" id="ideaNext" aria-label="Next reference"><svg><use href="#i-arrow"/></svg></button><figcaption id="ideaCredit"></figcaption></figure><div class="pd-thumbs idea-thumbs" id="ideaThumbs" aria-label="References for this look"></div><a class="link-arrow idea-pin" id="ideaPin" href="https://www.pinterest.com/" target="_blank" rel="noopener"><span>More ideas on Pinterest</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
         <div class="idea-info" aria-live="polite">
           <p class="eyebrow" id="ideaKicker"></p>
           <h3 id="ideaTitle"></h3>
@@ -1042,7 +1070,6 @@ img.sw-imgzone { outline: 2px dashed var(--terracotta); outline-offset: 3px; }
           <a class="btn btn-primary" href="#book" id="ideaCta"><span>I like this look</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
-      <p class="ideas-note">Inspiration photos by Unsplash photographers, shown to illustrate each style. Every STORYWALLS home is designed for its own family and site.</p>
     </div>
   </section>
 
@@ -1247,12 +1274,37 @@ img.sw-imgzone { outline: 2px dashed var(--terracotta); outline-offset: 3px; }
       <div class="stars" id="stars" role="img" aria-label="5 out of 5 stars"></div>
       <div class="rev-stage" id="revStage" aria-live="polite">
         <blockquote class="rev-quote" id="revQuote"></blockquote>
-        <p class="rev-who"><b id="revName"></b><span id="revProj"></span><em class="tag-sample" id="revSample">Sample review</em></p>
+        <p class="rev-who"><b id="revName"></b><span id="revProj"></span></p>
       </div>
       <div class="rev-ctrl">
         <button type="button" class="round-btn" id="revPrev" aria-label="Previous review"><svg><use href="#i-back"/></svg></button>
         <div class="rev-dots" id="revDots"></div>
         <button type="button" class="round-btn" id="revNext" aria-label="Next review"><svg><use href="#i-arrow"/></svg></button>
+      </div>
+      <div class="rev-add">
+        <button type="button" class="btn btn-outline btn-sm" id="revWrite" aria-expanded="false" aria-controls="revForm"><span>Write a review</span></button>
+        <form class="rev-form" id="revForm" hidden novalidate>
+          <fieldset class="rev-rate">
+            <legend>Your rating</legend>
+            <div class="rate-stars" role="radiogroup" aria-label="Rating out of 5">
+              <label><input type="radio" name="rating" value="1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 6.1 6.6.7-5 4.5 1.5 6.5L12 17.2l-5.9 3.4 1.5-6.5-5-4.5 6.6-.7z"/></svg><span class="sr">1 star</span></label>
+              <label><input type="radio" name="rating" value="2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 6.1 6.6.7-5 4.5 1.5 6.5L12 17.2l-5.9 3.4 1.5-6.5-5-4.5 6.6-.7z"/></svg><span class="sr">2 stars</span></label>
+              <label><input type="radio" name="rating" value="3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 6.1 6.6.7-5 4.5 1.5 6.5L12 17.2l-5.9 3.4 1.5-6.5-5-4.5 6.6-.7z"/></svg><span class="sr">3 stars</span></label>
+              <label><input type="radio" name="rating" value="4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 6.1 6.6.7-5 4.5 1.5 6.5L12 17.2l-5.9 3.4 1.5-6.5-5-4.5 6.6-.7z"/></svg><span class="sr">4 stars</span></label>
+              <label><input type="radio" name="rating" value="5" checked><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 6.1 6.6.7-5 4.5 1.5 6.5L12 17.2l-5.9 3.4 1.5-6.5-5-4.5 6.6-.7z"/></svg><span class="sr">5 stars</span></label>
+            </div>
+          </fieldset>
+          <div class="rev-fields">
+            <label>Your name<input name="name" maxlength="60" autocomplete="name"></label>
+            <label>Your email <span class="opt">(not shown on the site)</span><input name="email" type="email" maxlength="100" autocomplete="email" required></label>
+            <label>Your home or project <span class="opt">(optional)</span><input name="project" maxlength="80" placeholder="e.g. 3 BHK interiors · Pune"></label>
+          </div>
+          <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+          <label>Your review<textarea name="text" rows="4" maxlength="600" placeholder="How was your experience with STORYWALLS?"></textarea></label>
+          <p class="err" id="revErr" role="alert"></p>
+          <div class="rev-actions"><button type="submit" class="btn btn-primary btn-sm"><span>Send review</span></button></div>
+        </form>
+        <p class="rev-thanks" id="revThanks" role="status" hidden></p>
       </div>
     </div>
   </section>
@@ -1627,9 +1679,11 @@ img.sw-imgzone { outline: 2px dashed var(--terracotta); outline-offset: 3px; }
     instagramHandle: "@storywalls_architects",
     linkedinUrl: "https://www.linkedin.com/company/106348612/",
     formEndpoint: "",                  // optional: a Formspree or Web3Forms URL once the site is on your domain
+    reviewsApi: "https://script.google.com/macros/s/AKfycbwXtFZEy4vaitv4rpP9kyHpOaFEX0RCQMAjP0yaroCJsVGPlTauBDm0m0LhlpaOj9kJ/exec",                    // your Google review script URL (guide.md: "Automatic review approval"); approve in email -> shows on site
+    reviewEmailEndpoint: "https://formsubmit.co/ajax/storywallsarchitects@gmail.com",   // backup: plain review email when reviewsApi is empty
     closedDays: [],                    // e.g. [0] to block Sundays
     ideas: true,                       // shows the Ideas section (images/idea-*.jpg)
-    draft: true                        // set to false to hide the draft note
+    draft: false                       // set to true to show the "Draft preview" strip at the top
   };
 
   const IMG = "images/";
@@ -1743,8 +1797,8 @@ img.sw-imgzone { outline: 2px dashed var(--terracotta); outline-offset: 3px; }
     tropical: { name: "Tropical", title: "Deep roofs, open verandahs, lush gardens",
       text: "Pitched roofs with deep overhangs, open verandahs and generous planting. Built for monsoon rain and shade, with indoor and outdoor rooms that flow together.",
       palette: [["Teak", "#7A5A3A"], ["Lime white", "#EFEADF"], ["Palm green", "#4E6B45"], ["Stone", "#8F8A80"]], tags: ["Deep overhangs", "Verandahs", "Courtyard pool", "Natural timber"] },
-    traditional: { name: "Traditional Kerala", title: "Sloping roofs, carved timber, a courtyard at the heart",
-      text: "Layered sloping roofs, carved wood and a central courtyard, inspired by Kerala’s nalukettu homes. Naturally cool, and full of craft.",
+    traditional: { name: "Contemporary Kerala", title: "Kerala roofs and courtyards, designed new",
+      text: "Layered clay-tile roofs, teak columns, laterite and an open-to-sky courtyard, reworked for a new home with large glass, clean lines and modern comfort.",
       palette: [["Clay tile", "#A0522D"], ["Dark timber", "#4A2E1F"], ["Laterite", "#B5653A"], ["Lime white", "#F1EAD8"]], tags: ["Tiled roofs", "Carved timber", "Nadumuttam", "Laterite"] },
     minimal: { name: "Minimal white", title: "Pure forms, light and shadow",
       text: "White volumes, carefully framed openings and very little ornament. Light and shadow do the decorating, and the landscape softens the edges.",
@@ -1757,11 +1811,42 @@ img.sw-imgzone { outline: 2px dashed var(--terracotta); outline-offset: 3px; }
       palette: [["Sand render", "#E7CF9A"], ["Terracotta", "#B4643E"], ["White", "#F6F2EA"], ["Sea blue", "#3F7FA6"]], tags: ["Arches", "Terracotta roof", "Loggias", "Pool terrace"] }
   };
   /* Unsplash photographer for each inspiration photo */
-  const IDEA_CREDITS = { "living-indian": "solaticace", "living-scandinavian": "claybanks", "living-boho": "spacejoy", "living-minimalist": "prydumanodesign", "living-luxe": "aalolens",
-    "bedroom-indian": "soumendrak", "bedroom-scandinavian": "brina_blum", "bedroom-boho": "spacejoy", "bedroom-minimalist": "deconovo", "bedroom-luxe": "spacejoy",
-    "kitchen-indian": "ellentanner", "kitchen-scandinavian": "poojanclicks", "kitchen-boho": "soseyinteriors", "kitchen-minimalist": "i_am_simoesse", "kitchen-luxe": "zacgudakov",
+  const IDEA_CREDITS = { "living-indian": "", "living-scandinavian": "claybanks", "living-boho": "spacejoy", "living-minimalist": "prydumanodesign", "living-luxe": "aalolens",
+    "bedroom-indian": "", "bedroom-scandinavian": "brina_blum", "bedroom-boho": "spacejoy", "bedroom-minimalist": "deconovo", "bedroom-luxe": "spacejoy",
+    "kitchen-indian": "", "kitchen-scandinavian": "poojanclicks", "kitchen-boho": "soseyinteriors", "kitchen-minimalist": "i_am_simoesse", "kitchen-luxe": "zacgudakov",
     "dining-indian": "zoshuacolah", "dining-scandinavian": "claybanks", "dining-boho": "collovhome", "dining-minimalist": "claybanks", "dining-luxe": "spacejoy",
-    "arch-contemporary": "aviwerde", "arch-tropical": "hellobalikadek19_", "arch-traditional": "itsananthakrishnan", "arch-minimal": "pixasquare", "arch-farmhouse": "rstar50", "arch-mediterranean": "ajalao" };
+    "arch-contemporary": "aviwerde", "arch-tropical": "hellobalikadek19_", "arch-traditional": "", "arch-minimal": "pixasquare", "arch-farmhouse": "rstar50", "arch-mediterranean": "ajalao" };
+  /* More references for each look: images/idea-<key>-2.jpg, -3.jpg … in order, as [Unsplash photographer, design idea it shows] */
+  const IDEA_MORE = {
+    "living-indian": [["", "Carved mandir & pooja corner · AI render"], ["", "Indoor jhoola swing · AI render"], ["", "Baithak floor seating · AI render"]],
+    "bedroom-indian": [["", "Jharokha window seat · AI render"], ["", "Jaali headboard & block prints · AI render"], ["", "Pichwai mural bedroom · AI render"]],
+    "kitchen-indian": [["", "Patterned tile backsplash · AI render"], ["", "Fluted teak island & brass hood · AI render"], ["", "Kerala style teak kitchen · AI render"]],
+    "dining-indian": [["", "Carved dining chairs · AI render"], ["jeztimms", "The complete room"], ["sklepacki", "The complete room"]],
+    "living-scandinavian": [["campfire_guy", "Styled oak shelving"], ["isaozalp", "Wool throw & linen sofa"], ["luipeng", "Pale oak coffee table"]],
+    "bedroom-scandinavian": [["deconovo", "Linen bedding"], ["fujiphilm", "Simple bedside"], ["i_am_simoesse", "Wooden headboard"]],
+    "kitchen-scandinavian": [["edgarraw", "Open white shelves"], ["brad_chapman", "Oak kitchen island"], ["zacgudakov", "Matte white cabinets"]],
+    "dining-scandinavian": [["lauradavidson", "Wishbone chairs"], ["camilasbeing", "Pendant over the table"], ["vendedorescostalive", "Solid oak table"]],
+    "living-boho": [["ceydaciftci", "Macramé wall hanging"], ["", "Rattan chairs & plants · AI render"], ["claybanks", "The complete room"]],
+    "bedroom-boho": [["claybanks", "Rattan headboard"], ["thephotographermom", "Layered textured bedding"], ["chris_designer", "Hanging plants"]],
+    "kitchen-boho": [["beazy", "Open shelves with plants"], ["jenniewilson4", "Woven pendants over the island"], ["claybanks", "The complete room"]],
+    "dining-boho": [["lianamikah", "Rattan dining chairs"], ["", "Woven pendants & cane chairs · AI render"], ["kkalerry", "The complete room"]],
+    "living-minimalist": [["", "Cove lighting & hidden storage · AI render"], ["___atmos", "The complete room"], ["ka_idris", "The complete room"]],
+    "bedroom-minimalist": [["lauraadaiphoto", "Platform bed"], ["alexphotogram", "Floating nightstand"], ["poojanclicks", "The complete room"]],
+    "kitchen-minimalist": [["ka_idris", "Handleless cabinets"], ["___atmos", "Microcement counter"], ["bluewaterglobe", "Clutter-free counter"]],
+    "dining-minimalist": [["bebachka", "Simple wooden table"], ["claybanks", "Dining bench"], ["sgroup", "The complete room"]],
+    "living-luxe": [["3dartistmoradi", "Marble coffee table"], ["peytonann", "Velvet sofa"], ["lostvoyager", "Brass floor lamp"]],
+    "bedroom-luxe": [["3dartistmoradi", "Upholstered headboard"], ["aalolens", "Statement chandelier"], ["heyquilia", "The complete room"]],
+    "kitchen-luxe": [["i_am_simoesse", "Marble island"], ["brianzajac", "The complete room"], ["ka_idris", "The complete room"]],
+    "dining-luxe": [["mrkheu", "Marble dining table"], ["", "Crystal chandelier & velvet chairs · AI render"], ["hypvisual", "The complete room"]],
+    "arch-contemporary": [["grug_257", "Infinity pool deck"], ["urbanrival", "The complete home"], ["griyabangun", "The complete home"], ["alexciland", "The complete home"]],
+    "arch-tropical": [["claybanks", "Open verandah"], ["mlube", "Courtyard garden"], ["ch_photography", "Timber pergola"], ["spxclicks", "The complete home"]],
+    "arch-traditional": [["", "Open-to-sky nadumuttam courtyard · AI render"], ["", "Gabled tile roof & wooden screen · AI render"], ["", "Poomukham verandah with swing · AI render"], ["", "Courtyard pool villa · AI render"]],
+    "arch-minimal": [["framesforyourheart", "White volumes and pool"], ["", "Floating stair & framed openings · AI render"], ["kellysikkema", "Framed openings"], ["felifox", "Flat-roof volumes"]],
+    "arch-farmhouse": [["claybanks", "Wraparound porch"], ["bruceb_uk", "Dormer windows"], ["joetography", "Barn doors"], ["tyronesand", "The complete home"]],
+    "arch-mediterranean": [["zoshuacolah", "Arched doorway"], ["clovegrove7", "Terracotta roof"], ["", "Arched loggia & painted shutters · AI render"], ["riegal", "Courtyard fountain"]]
+  };
+  /* Caption for the first photo of a look when it is an AI render */
+  const IDEA_FIRST = { "living-indian": "Teak sofa, jaali & Tanjore art · AI render", "bedroom-indian": "Carved four-poster bed · AI render", "kitchen-indian": "Teak kitchen with brass on open shelves · AI render", "arch-traditional": "Contemporary Kerala villa · AI render" };
   const IDEA_IMGS = {};   /* inspiration photos replaced in the editor, by key */
 
   /* House plans drawn by the studio: [file, title, sheet] */
@@ -2213,20 +2298,38 @@ img.sw-imgzone { outline: 2px dashed var(--terracotta); outline-offset: 3px; }
     };
     const [imgA, imgB] = $$("#ideaImg img");
     let front = imgA;
-    function showIdea(first) {
+    /* Each look has several references: [file, photographer]; the arrows step through them */
+    let ref = 0;
+    const refsOf = key => [[IDEA_IMGS[key] || `idea-${key}.jpg`, IDEA_IMGS[key] ? null : IDEA_CREDITS[key], (IDEA_FIRST[key] || (key.startsWith("arch-") ? "The complete home" : "The complete room"))], ...(IDEA_MORE[key] || []).map(([who, idea], i) => [`idea-${key}-${i + 2}.jpg`, who, idea])];
+    function showIdea(first, keepRef) {
       const isInt = tab === "int";
       const s = isInt ? IDEA_STYLES[style] : ARCH_STYLES[archStyle];
       const roomName = isInt ? IDEA_ROOMS.find(r => r[0] === room)[1] : "Home style";
       const key = isInt ? `${room}-${style}` : `arch-${archStyle}`;
-      const src = srcOf(IDEA_IMGS[key] || `idea-${key}.jpg`), alt = isInt ? `${s.name} ${roomName.toLowerCase()} inspiration` : `${s.name} home inspiration`;
+      const refs = refsOf(key);
+      if (!keepRef) ref = 0;
+      ref = (ref + refs.length) % refs.length;
+      const [file, who, idea] = refs[ref];
+      $("#ideaPrev").hidden = $("#ideaNext").hidden = refs.length < 2;
+      const src = srcOf(file), alt = isInt ? `${s.name} ${roomName.toLowerCase()} inspiration ${ref + 1}` : `${s.name} home inspiration ${ref + 1}`;
       if (first) { front.src = src; front.alt = alt; }
       else {
         const back = front === imgA ? imgB : imgA;
         back.onload = () => { back.classList.remove("out"); front.classList.add("out"); front = back; };
         back.alt = alt; back.src = src;
       }
-      const who = IDEA_IMGS[key] ? null : IDEA_CREDITS[key];
-      $("#ideaCredit").innerHTML = who ? `Photo: <a href="https://unsplash.com/@${esc(who)}" target="_blank" rel="noopener">@${esc(who)}</a> on Unsplash` : "";
+      if (!keepRef) {
+        $("#ideaThumbs").innerHTML = refs.map(([f], i) => `<button type="button" aria-label="Reference ${i + 1} of ${refs.length}"><img src="${esc(srcOf(f))}" alt="" loading="lazy"></button>`).join("");
+        $$("#ideaThumbs button").forEach((b, i) => b.addEventListener("click", () => { ref = i; showIdea(false, true); }));
+      }
+      $$("#ideaThumbs button").forEach((b, i) => b.setAttribute("aria-current", String(i === ref)));
+      const count = refs.length > 1 ? ` · ${ref + 1} / ${refs.length}` : "";
+      $("#ideaCredit").innerHTML = (idea ? `<b>${esc(idea.replace(/ · AI render$/, ""))}</b>` : "") + count;
+      /* More of this exact look on Pinterest (opens their search; nothing is copied) */
+      const pinQuery = isInt ? `${s.name} ${roomName} interior design ideas` : `${s.name} house exterior design ideas`;
+      $("#ideaPin").href = `https://www.pinterest.com/search/pins/?q=${encodeURIComponent(pinQuery)}`;
+      $("#ideaPin span").textContent = `More ${s.name.toLowerCase()} ${isInt ? roomName.toLowerCase() : "home"} ideas on Pinterest`;
+      if (keepRef) return;
       $("#ideaKicker").textContent = isInt ? `${s.name} · ${roomName}` : `Architecture · ${s.name}`;
       $("#ideaTitle").textContent = s.title;
       $("#ideaText").textContent = s.text;
@@ -2256,6 +2359,9 @@ img.sw-imgzone { outline: 2px dashed var(--terracotta); outline-offset: 3px; }
       renderStyleChips();
       showIdea(false);
     }));
+    $("#ideaPrev").addEventListener("click", () => { ref--; showIdea(false, true); });
+    $("#ideaNext").addEventListener("click", () => { ref++; showIdea(false, true); });
+    swipe($("#ideaImg"), () => { ref++; showIdea(false, true); }, () => { ref--; showIdea(false, true); });
     renderStyleChips();
     showIdea(true);
     ideaApi = { front: () => front, key: () => (tab === "int" ? `${room}-${style}` : `arch-${archStyle}`) };
@@ -2334,8 +2440,16 @@ img.sw-imgzone { outline: 2px dashed var(--terracotta); outline-offset: 3px; }
 
   /* ----- Reviews: arrows, dots, swipe, gentle auto-advance ----- */
   $("#stars").innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 6.1 6.6.7-5 4.5 1.5 6.5L12 17.2l-5.9 3.4 1.5-6.5-5-4.5 6.6-.7z"/></svg>'.repeat(5);
-  $("#revDots").innerHTML = REVIEWS.map((_, i) => `<button type="button" aria-label="Review ${i + 1}"></button>`).join("");
-  const revDots = $$("#revDots button");
+  /* Owner control: a review marked hidden: true in REVIEWS is taken off the site */
+  for (let i = REVIEWS.length - 1; i >= 0; i--) if (REVIEWS[i].hidden) REVIEWS.splice(i, 1);
+  $("#reviews").hidden = !REVIEWS.length;
+  let revDots = [];
+  function renderRevDots() {
+    $("#revDots").innerHTML = REVIEWS.map((_, i) => `<button type="button" aria-label="Review ${i + 1}"></button>`).join("");
+    revDots = $$("#revDots button");
+    revDots.forEach((b, i) => b.addEventListener("click", () => showReview(i)));
+  }
+  renderRevDots();
   let rev = 0, rTimer, rPaused = false;
   function showReview(i, animate = true) {
     rev = (i + REVIEWS.length) % REVIEWS.length;
@@ -2344,7 +2458,10 @@ img.sw-imgzone { outline: 2px dashed var(--terracotta); outline-offset: 3px; }
     if (animate) restart($("#revQuote"));
     $("#revName").textContent = r.name;
     $("#revProj").textContent = r.project;
-    $("#revSample").hidden = !(r.sample || SAMPLE_QUOTES.has(r.quote));
+    /* Each review shows its own rating (stars: 1–5, 5 when not given) */
+    const n = Math.max(1, Math.min(5, Math.round(+r.stars || 5)));
+    $$("#stars svg").forEach((s, j) => s.classList.toggle("off", j >= n));
+    $("#stars").setAttribute("aria-label", `${n} out of 5 stars`);
     bindText($("#revQuote"), `reviews.${rev}.quote`);
     bindText($("#revName"), `reviews.${rev}.name`);
     bindText($("#revProj"), `reviews.${rev}.project`);
@@ -2355,13 +2472,76 @@ img.sw-imgzone { outline: 2px dashed var(--terracotta); outline-offset: 3px; }
   showReview(0, false);
   $("#revPrev").addEventListener("click", () => showReview(rev - 1));
   $("#revNext").addEventListener("click", () => showReview(rev + 1));
-  revDots.forEach((b, i) => b.addEventListener("click", () => showReview(i)));
+  /* Reviews you approve from your email appear here automatically, newest first */
+  if (CONFIG.reviewsApi && !editing) {
+    fetch(CONFIG.reviewsApi).then(r => r.json()).then(d => {
+      const known = new Set(REVIEWS.map(r => r.quote));
+      const fresh = (d.reviews || []).filter(r => r.quote && r.name && !known.has(r.quote))
+        .map(r => ({ quote: String(r.quote), name: String(r.name), project: String(r.project || ""), stars: +r.stars || 5 }));
+      if (!fresh.length) return;
+      REVIEWS.unshift(...fresh);
+      $("#reviews").hidden = false;
+      renderRevDots();
+      showReview(0, false);
+    }).catch(() => { /* the reviews written in this file still show */ });
+  }
   const revBox = $("#reviews");
   revBox.addEventListener("pointerenter", () => { rPaused = true; });
   revBox.addEventListener("pointerleave", () => { rPaused = false; });
   revBox.addEventListener("focusin", () => { rPaused = true; });
   revBox.addEventListener("focusout", () => { rPaused = false; });
   swipe($("#revStage"), () => showReview(rev + 1), () => showReview(rev - 1));
+
+  /* ----- Write a review: visitors pick 1–5 stars and send their words to the studio ----- */
+  const revForm = $("#revForm"), rateLabels = $$(".rate-stars label");
+  const chosenStars = () => +((revForm.querySelector('input[name="rating"]:checked') || {}).value || 0);
+  const paintStars = n => rateLabels.forEach((l, i) => l.classList.toggle("on", i < n));
+  rateLabels.forEach((l, i) => l.addEventListener("pointerenter", () => paintStars(i + 1)));
+  $(".rate-stars").addEventListener("pointerleave", () => paintStars(chosenStars()));
+  revForm.addEventListener("change", e => { if (e.target.name === "rating") paintStars(chosenStars()); });
+  paintStars(chosenStars());
+  $("#revWrite").addEventListener("click", () => {
+    const open = revForm.hidden;
+    revForm.hidden = !open;
+    $("#revWrite").setAttribute("aria-expanded", String(open));
+    $("#revThanks").hidden = true;
+    if (open) { rPaused = true; revForm.elements.name.focus(); }
+  });
+  revForm.addEventListener("submit", async e => {
+    e.preventDefault();
+    const f = revForm.elements, stars = chosenStars(), name = f.name.value.trim(), email = f.email.value.trim(), project = f.project.value.trim(), text = f.text.value.trim();
+    const err = !stars ? "Please choose a star rating." : !name ? "Please add your name." : !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) ? "Please add a valid email address." : text.length < 10 ? "Please write a few words about your experience." : "";
+    $("#revErr").textContent = err;
+    if (err) return;
+    const msg = `New review for STORYWALLS\nRating: ${"★".repeat(stars)}${"☆".repeat(5 - stars)} (${stars}/5)\nName: ${name}\nEmail: ${email}${project ? `\nHome / project: ${project}` : ""}\n\n“${text}”`;
+    /* The review is emailed to the studio for approval (with Approve / Reject buttons when reviewsApi is set).
+       Nothing appears on the site until the studio approves it. WhatsApp is offered as an optional extra. */
+    let mailed = false;
+    if (CONFIG.reviewsApi) {
+      try {
+        /* text/plain keeps this a simple request that Google Apps Script accepts from any site */
+        const res = await fetch(CONFIG.reviewsApi, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ stars, name, email, project, review: text, website: f.website.value }) });
+        mailed = res.ok && (await res.json()).ok;
+      } catch (_) { /* fall through to the email form below */ }
+    }
+    if (!mailed && CONFIG.reviewEmailEndpoint) {
+      try {
+        const res = await fetch(CONFIG.reviewEmailEndpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({ _subject: `New ${stars}★ review from ${name} – approve?`, _template: "table", _captcha: "false", Rating: `${stars} / 5`, Name: name, Email: email, "Home / project": project || "–", Review: text }) });
+        mailed = res.ok;
+      } catch (_) { /* WhatsApp still has it */ }
+    }
+    revForm.reset();
+    paintStars(chosenStars());
+    revForm.hidden = true;
+    $("#revWrite").setAttribute("aria-expanded", "false");
+    $("#revThanks").innerHTML = mailed
+      ? `Thank you! Your review has been sent to STORYWALLS and will appear here once it is approved. <a href="${esc(waLink(msg))}" target="_blank" rel="noopener">Also share it on WhatsApp</a>`
+      : `Thank you! Please <a href="${esc(waLink(msg))}" target="_blank" rel="noopener">send your review on WhatsApp</a> to reach STORYWALLS.`;
+    $("#revThanks").hidden = false;
+    rPaused = false;
+  });
 
   /* ----- Reveals, drawing, process highlight ----- */
   if (!reduceMotion && "IntersectionObserver" in window) {
@@ -2918,7 +3098,7 @@ img.sw-imgzone { outline: 2px dashed var(--terracotta); outline-offset: 3px; }
       const pm = /^projects\.(\d+)\.(title|type|location|status)$/.exec(path);
       if (pm) refreshCard(+pm[1]);
       const m = /^reviews\.(\d+)\.quote$/.exec(path);
-      if (m) { const r = REVIEWS[+m[1]]; r.sample = SAMPLE_QUOTES.has(r.quote); PATCHES[`reviews.${m[1]}.sample`] = r.sample; $("#revSample").hidden = !r.sample; }
+      if (m) { const r = REVIEWS[+m[1]]; r.sample = SAMPLE_QUOTES.has(r.quote); PATCHES[`reviews.${m[1]}.sample`] = r.sample; }
     }
     markDirty();
   });

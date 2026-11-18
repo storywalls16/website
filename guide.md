@@ -82,8 +82,8 @@ In Vercel, open the project and go to **Settings → Domains**. Add `www.storywa
 
 | What | Where in `site/index.html` | Change |
 |---|---|---|
-| The dark "Draft preview" strip at the top | `const CONFIG = {` (around line 1619) | `draft: true` → `draft: false` |
-| The "Sample review" tags | `const REVIEWS = [` (around line 1775) | Replace each `quote` with a real client's words. The tag disappears by itself. |
+| The dark "Draft preview" strip at the top | `const CONFIG = {` | Already switched off (`draft: false`). Set `true` to show it again. |
+| Client reviews | `const REVIEWS = [` | Check the quotes are your clients' real words (see 5.4). |
 | Consultation requests by email | `formEndpoint: ""` in CONFIG | See section 5.8 |
 
 ## 5. How to edit
@@ -149,10 +149,34 @@ Each project is one block, shown on the page in the same order:
 ### 5.4 Client reviews: `const REVIEWS = [` (line ~1775)
 
 ```js
-{ quote: "Their words…", name: "Rahul Deshmukh", project: "Full-home interiors · Pune", sample: false },
+{ quote: "Their words…", name: "Rahul Deshmukh", project: "Full-home interiors · Pune", stars: 5, sample: false },
 ```
 
-A review shows a "Sample review" tag while its quote is still one of the placeholder quotes (listed under `const SAMPLE_QUOTES`, line ~1783). Write the client's real words in `quote` and the tag goes away. You can add or remove reviews; keep the commas right.
+`stars` is the rating shown above the quote (1 to 5; left out means 5).
+
+**Removing a review (owner only):** visitors can never delete reviews; only you can, by editing this file. To take a review off the site but keep it for later, add `hidden: true` to it, e.g. `{ quote: "…", name: "…", project: "…", stars: 5, hidden: true },`. To delete it for good, remove its whole `{ … },` line (keep the commas right). Then redeploy.
+
+**Reviews from visitors (you approve every one):** the "Write a review" button lets anyone pick 1–5 stars and enter their name, email (required, never shown) and review. No login is needed. When they press "Send review", the review is emailed to storywallsarchitects@gmail.com automatically. Afterwards they also see an optional "Also share it on WhatsApp" link (WhatsApp only reaches you if they press send; websites cannot send WhatsApp messages by themselves).
+
+### 5.4a Automatic review approval (Approve in email → shows on the website)
+
+**This is set up and working.** It runs from a small free script in your own Google account (storywallsarchitects@gmail.com):
+
+- Google Sheet **STORYWALLS reviews** (tab "Reviews") holds every review.
+- Apps Script project: open it from <https://script.google.com> (it's called "Untitled project"). Its code is the same as `review-backend/Code.gs` in this folder.
+- Web app URL, already in `site/index.html` as `reviewsApi`: `https://script.google.com/macros/s/AKfycbwXtFZEy4vaitv4rpP9kyHpOaFEX0RCQMAjP0yaroCJsVGPlTauBDm0m0LhlpaOj9kJ/exec`
+
+If you ever change `Code.gs`: paste it into the Apps Script editor, **Save**, then **Deploy → Manage deployments → pencil (edit) → Version: New version → Deploy**. That keeps the same URL.
+
+**Writing a review yourself:** open the email **"Your STORYWALLS review tools"** and click **Write a review** (every review email also has a "Write a review" link at the bottom). Reviews added there go live straight away. Keep the link private. To get the email again, run `sendOwnerLink` in the Apps Script editor.
+
+How it works:
+- Every new review arrives by email as **"New 4★ review from Priya – approve?"** with **Approve** and **Reject** buttons.
+- **Approve** → it appears on the website within about a minute, newest first. **Reject** (or do nothing) → it never appears.
+- The Google Sheet lists every review. To take an approved review down later, change its status cell from `approved` to `rejected`.
+- Reviewers' emails stay in your sheet only; the website never shows them.
+
+If `reviewsApi` is ever emptied, reviews fall back to a plain email via FormSubmit (`reviewEmailEndpoint`), and publishing them means adding them to `REVIEWS` by hand.
 
 ### 5.5 Founder photo and paintings
 
@@ -174,7 +198,7 @@ Search for a few words of it (Ctrl+F) and change the text between the tags, for 
 | Logo badge (header and browser tab icon) | `logo-badge.png` | Same file name everywhere |
 | Before / after slider | `bn-before.jpg`, `bn-after.jpg` | Search `ba-before` |
 | House plans | `arch-talegaon-gf.jpg` etc. | `const DRAWINGS = [` (line ~1768) |
-| Ideas section | `idea-<room>-<style>.jpg` (e.g. `idea-living-boho.jpg`) and `idea-arch-<style>.jpg` | Replace the file and keep its name |
+| Ideas section | `idea-<room>-<style>.jpg` (e.g. `idea-living-boho.jpg`) and `idea-arch-<style>.jpg`; the extra references are the same name with `-2`, `-3`… (e.g. `idea-living-boho-2.jpg`) | Replace the file and keep its name. Photographer credits are in `const IDEA_CREDITS` (first photo) and `const IDEA_MORE` (the extra ones, in order, as `["photographer", "design idea shown"]`; the idea name appears in the caption). To add one more reference, save it as the next number and add `["photographer", "idea name"]` to that look's list in `IDEA_MORE`. The "More … ideas on Pinterest" link under each look opens Pinterest's own search for that style. |
 
 ### 5.8 Booking form
 
